@@ -39,8 +39,9 @@ Backend:
 
 http://localhost:8080
 
+
 ## Team Members
 
-* Ayush Raj
-* kislay kumar
-* Ritik kumar
+* Ayush Raj     -2500030753
+* kislay kumar  -2500032706
+* Ritik kumar   -2500032702
