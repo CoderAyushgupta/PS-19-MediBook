@@ -1,0 +1,79 @@
+services:
+  postgres:
+    image: postgres:15
+    container_name: ps19-postgres
+    environment:
+      POSTGRES_DB: appointment_booking
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: "Tuit034911#."
+    ports:
+      - "5433:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    restart: unless-stopped
+
+  mongodb:
+    image: mongo:7
+    container_name: ps19-mongodb
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodata:/data/db
+    restart: unless-stopped
+
+  springboot:
+    build:
+      context: ./booking
+    container_name: ps19-springboot
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/appointment_booking
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: "Tuit034911#."
+      JWT_SECRET: appointment_booking_secret_key_ps19_2026_very_long
+      JWT_EXPIRATION: "86400000"
+    depends_on:
+      - postgres
+    restart: unless-stopped
+
+  nodejs:
+    build:
+      context: ./medibook-search
+    container_name: ps19-nodejs
+    ports:
+      - "7000:7000"
+    environment:
+      MONGO_URI: mongodb://mongodb:27017/medibook
+    depends_on:
+      - mongodb
+    restart: unless-stopped
+
+  fastapi:
+    build:
+      context: ./fastapi-gateway
+    container_name: ps19-fastapi
+    ports:
+      - "9000:9000"
+    depends_on:
+      - springboot
+      - nodejs
+    restart: unless-stopped
+
+  react:
+    build:
+      context: ./appointment-frontend
+    container_name: ps19-react
+    ports:
+      - "3000:80"
+    depends_on:
+      - fastapi
+    restart: unless-stopped
+
+volumes:
+  pgdata:
+    external: true
+    name: ayush_pgdata
+  mongodata:
+    external: true
+    name: ayush_mongodata
