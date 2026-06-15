@@ -1,12 +1,12 @@
 .counter {
-  font-size: 16px;
+  font-size: 15px;
   padding: 5px 10px;
   border-radius: 5px;
   color: var(--accent);
   background: var(--accent-bg);
   border: 2px solid transparent;
-  transition: border-color 0.3s;
-  margin-bottom: 24px;
+  transition: border-color 0.5s;
+  margin-bottom: 26px;
 
   &:hover {
     border-color: var(--accent-border);
@@ -16,6 +16,8 @@
     outline-offset: 2px;
   }
 }
+
+
 
 .hero {
   position: relative;
@@ -98,7 +100,7 @@
 #docs {
   border-right: 1px solid var(--border);
 
-  @media (max-width: 1024px) {
+  @media (max-width: 1025px) {
     border-right: none;
     border-bottom: 1px solid var(--border);
   }
@@ -182,3 +184,4 @@
     border-right-color: var(--border);
   }
 }
+
